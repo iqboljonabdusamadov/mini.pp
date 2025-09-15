@@ -2,41 +2,58 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
-  <title>Telegram Mini App</title>
+  <title>📊 SavdoBot MiniApp</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      padding: 50px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: inline-block;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f6f9; }
     h1 { color: #2c3e50; }
-    button {
-      background: #0088cc;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin-top: 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0077b6;
-    }
+    .card { background: #fff; padding: 15px; margin: 10px 0; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .title { font-weight: bold; color: #2980b9; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Salom 👋</h1>
-    <p>Bu sizning Telegram Mini App sahifangiz 🚀</p>
-    <button onclick="alert('Mahsulot qo‘shildi!')">📦 Mahsulot qo‘shish</button>
-  </div>
+  <h1>📦 Mahsulotlar</h1>
+  <div id="products">⏳ Yuklanmoqda...</div>
+
+  <h1>💸 Xarajatlar</h1>
+  <div id="expenses">⏳ Yuklanmoqda...</div>
+
+  <h1>📊 Savdolar</h1>
+  <div id="sales">⏳ Yuklanmoqda...</div>
+
+  <script>
+    const BIN_ID = "68c806ded0ea881f407e8f1d";
+    const API_KEY = "$2a$10$KJgIisXYAe76dAUceAx/q.ClLQzoPPJgMO9LGklLjlu721WIl2qku";
+
+    async function loadData() {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+        headers: { "X-Master-Key": API_KEY }
+      });
+      const data = await res.json();
+      const record = data.record;
+
+      // Mahsulotlar
+      let pHtml = "";
+      record.products.forEach(p => {
+        pHtml += `<div class="card"><span class="title">${p.name}</span> – ${p.weight} kg</div>`;
+      });
+      document.getElementById("products").innerHTML = pHtml || "❌ Mahsulot yo‘q";
+
+      // Xarajatlar
+      let eHtml = "";
+      record.expenses.forEach(e => {
+        eHtml += `<div class="card">${e.amount} so‘m – ${e.date}</div>`;
+      });
+      document.getElementById("expenses").innerHTML = eHtml || "❌ Xarajat yo‘q";
+
+      // Savdolar
+      let sHtml = "";
+      record.sales.forEach(s => {
+        sHtml += `<div class="card">${s.product} – ${s.amount} kg – ${s.price} so‘m</div>`;
+      });
+      document.getElementById("sales").innerHTML = sHtml || "❌ Savdo yo‘q";
+    }
+
+    loadData();
+  </script>
 </body>
 </html>
