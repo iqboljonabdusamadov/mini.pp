@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Olma",
+    "price": 15000,
+    "cost": 12000,
+    "box_weight": 10,
+    "box_count": 5,
+    "total_weight": 50,
+    "profit": 150000
+  },
+  {
+    "name": "Banan",
+    "price": 20000,
+    "cost": 16000,
+    "box_weight": 8,
+    "box_count": 4,
+    "total_weight": 32,
+    "profit": 128000
+  },
+  {
+    "name": "Apelsin",
+    "price": 18000,
+    "cost": 14000,
+    "box_weight": 12,
+    "box_count": 3,
+    "total_weight": 36,
+    "profit": 144000
+  }
+]
